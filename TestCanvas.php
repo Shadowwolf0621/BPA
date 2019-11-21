@@ -7,26 +7,45 @@
 
 	
 <body style = 'background-color: #DFDFDF'>
-	
+	<p id='TestCoords'></p>
 	<div style='display: flex; justify-content: center; align-content: center;'>
-		<canvas id='PlannerCanvas' style='width:50vw; height:50vw; border: 1px solid black' onClick='ClickOnCanvas();' onMouseMove='GetMousePos(e);'></canvas>
+		<canvas id='PlannerCanvas' style='width:50vw; height:50vw; border: 1px solid black' onClick='ClickOnCanvas();'></canvas>
 	</div>
 	
 </body>
 	
 	<script>
 		
-		var clickPos;
+		var click1Pos = [,];
+		var click2Pos = [,];
 		var canvas = document.getElementById('PlannerCanvas');
 		var ctx = canvas.getContext('2d');
 		var w = canvas.width;
 		var h = canvas.height;
 		var MouseX;
 		var MouseY;	
+		canvas.addEventListener('mousemove', GetMousePos);
+				   
 		
 		function ClickOnCanvas(){
 			
-			GetMousePos();
+			if(click1Pos == ''){
+				click1Pos[0] = MouseX;
+				click1Pos[1] = MouseY;
+			}
+			else if (click2Pos == ''){
+				click2Pos[0] = MouseX;
+				click2Pos[1] = MouseY;
+			}
+			else {
+				click1Pos = [,];
+				click2Pos = [,];
+				ClickOnCanvas();
+			}
+			
+			
+			window.alert(click1Pos);
+			window.alert(click2Pos);
 			
 		}
 		
@@ -37,7 +56,7 @@
 			MouseX = e.clientX - rect.left;
 			MouseY = e.clientY - rect.top;
 			
-			window.alert(MouseX);
+			document.getElementById('TestCoords').innerHTML = MouseX + ', ' + MouseY; 
 		}
 		
 		
