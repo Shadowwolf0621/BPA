@@ -37,17 +37,17 @@
 				click2Pos[0] = MouseX;
 				click2Pos[1] = MouseY;
                 
-                DrawLine(click1Pos, click2Pos);
+                DrawLine(click1Pos[0], click1Pos[1], click2Pos[0], click2Pos[1]);
 			}
 			else {
 				click1Pos = [,];
 				click2Pos = [,];
-				ClickOnCanvas(click1Pos[0], click1Pos[1], click2Pos[0], click2Pos[1]);
+				ClickOnCanvas();
 			}
 			
 			
-			window.alert(click1Pos);
-			window.alert(click2Pos);
+			//window.alert(click1Pos);
+			//window.alert(click2Pos);
 			
 		}
 		
@@ -63,8 +63,14 @@
         
         function DrawLine(Pos1X, Pos1Y, Pos2X, Pos2Y){
             window.alert(Pos1X, Pos1Y);
+            window.alert(Pos2X, Pos2Y);
+            
             ctx.moveTo(Pos1X, Pos1Y);
             ctx.lineTo(Pos2X, Pos2Y);
+            ctx.stroke();
+            
+            ctx.moveTo(0, 0);
+            ctx.lineTo(200, 100);
             ctx.stroke();
         }
 		
