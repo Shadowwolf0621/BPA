@@ -36,11 +36,13 @@
 			else if (click2Pos == ''){
 				click2Pos[0] = MouseX;
 				click2Pos[1] = MouseY;
+                
+                DrawLine(click1Pos, click2Pos);
 			}
 			else {
 				click1Pos = [,];
 				click2Pos = [,];
-				ClickOnCanvas();
+				ClickOnCanvas(click1Pos[0], click1Pos[1], click2Pos[0], click2Pos[1]);
 			}
 			
 			
@@ -58,6 +60,13 @@
 			
 			document.getElementById('TestCoords').innerHTML = MouseX + ', ' + MouseY; 
 		}
+        
+        function DrawLine(Pos1X, Pos1Y, Pos2X, Pos2Y){
+            window.alert(Pos1X, Pos1Y);
+            ctx.moveTo(Pos1X, Pos1Y);
+            ctx.lineTo(Pos2X, Pos2Y);
+            ctx.stroke();
+        }
 		
 		
 	</script>
