@@ -9,7 +9,7 @@
 <body style = 'background-color: #DFDFDF'>
 	<p id='TestCoords'></p>
 	<div style='display: flex; justify-content: center; align-content: center;'>
-		<canvas id='PlannerCanvas' style='width:50vw; height:50vw; border: 1px solid black' onClick='ClickOnCanvas();'></canvas>
+		<canvas id='PlannerCanvas' width="500" height="500" style='border: 1px solid black' onClick='ClickOnCanvas();'></canvas>
 	</div>
 	
 </body>
@@ -43,12 +43,7 @@
 				click1Pos = [,];
 				click2Pos = [,];
 				ClickOnCanvas();
-			}
-			
-			
-			//window.alert(click1Pos);
-			//window.alert(click2Pos);
-			
+			}			
 		}
 		
 		function GetMousePos(e){
@@ -62,15 +57,8 @@
 		}
         
         function DrawLine(Pos1X, Pos1Y, Pos2X, Pos2Y){
-            window.alert(Pos1X, Pos1Y);
-            window.alert(Pos2X, Pos2Y);
-            
             ctx.moveTo(Pos1X, Pos1Y);
             ctx.lineTo(Pos2X, Pos2Y);
-            ctx.stroke();
-            
-            ctx.moveTo(0, 0);
-            ctx.lineTo(200, 100);
             ctx.stroke();
         }
 		
