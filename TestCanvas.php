@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		
-		<canvas id='PlannerCanvas' width="500" height="500" style='border: 1px solid black' onClick='ClickOnCanvas();'></canvas>
+		<canvas id='PlannerCanvas' width="500" height="500" style='border: 1px solid black' onClick='ClickOnCanvas();' onMouseMove="HoverOverCanvas();" onMouseDown="CurrentMouseButtonPress(event);"></canvas>
 		<button onClick="ClearCanvas();">Clear Canvas</button>
 	</div>
 	
@@ -58,26 +58,39 @@
 		var h = canvas.height;
 		var BrushSize;
 		var DrawMode = 'Brush';
+		var MouseButton;
 		canvas.addEventListener('mousemove', GetMousePos);
 				   
 		
 		function ClickOnCanvas(){
 			
-			if(click1Pos == ''){
-				click1Pos[0] = MouseX;
-				click1Pos[1] = MouseY;
-			}
-			else if (click2Pos == ''){
-				click2Pos[0] = MouseX;
-				click2Pos[1] = MouseY;
+			if(DrawMode == 'Line'){
+				if(click1Pos == ''){
+					click1Pos[0] = MouseX;
+					click1Pos[1] = MouseY;
+				}
+				else if (click2Pos == ''){
+					click2Pos[0] = MouseX;
+					click2Pos[1] = MouseY;
                 
-                DrawLine(click1Pos[0], click1Pos[1], click2Pos[0], click2Pos[1]);
+                	DrawLine(click1Pos[0], click1Pos[1], click2Pos[0], click2Pos[1]);
+				}
+				else {
+					click1Pos = [,];
+					click2Pos = [,];
+					ClickOnCanvas();
+				}		
 			}
-			else {
-				click1Pos = [,];
-				click2Pos = [,];
-				ClickOnCanvas();
-			}			
+		}
+		
+		function CurrentMouseButtonPress(event){
+			MouseButton = event.button;
+		}
+		
+		function HoverOverCanvas(){
+			if(DrawMode == 'Brush' && MouseButton == 0){
+				DrawLine(0, 0, MouseX, MouseY);
+			}
 		}
 		
 		function GetMousePos(e){
