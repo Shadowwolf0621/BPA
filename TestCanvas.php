@@ -71,26 +71,8 @@
 		
 		function ClickOnCanvas(){
 			
-			/*if(DrawMode == 'Line'){
-				if(click1Pos == ''){
-					click1Pos[0] = MouseX;
-					click1Pos[1] = MouseY;
-				}
-				else if (click2Pos == ''){
-					click2Pos[0] = MouseX;
-					click2Pos[1] = MouseY;
-                
-                	DrawLine(click1Pos[0], click1Pos[1], click2Pos[0], click2Pos[1]);
-				}
-				else {
-					click1Pos = [,];
-					click2Pos = [,];
-					ClickOnCanvas();
-				}		
-			}*/
             ClicksX.push(MouseX);
             ClicksY.push(MouseY);
-            
             
 		}
 		
@@ -176,6 +158,7 @@
         function DrawOldLines(){
             for(var i = 0; i < ClicksX.length; i++){
                 DrawLine(ClicksX[i], ClicksY[i], ClicksX[i+1], ClicksY[i+1]);
+				
             }
         }
 		
