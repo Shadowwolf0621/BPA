@@ -35,7 +35,10 @@
 			
 			    <input type="color" id='LineColor' onChange="ChangeColor();">
 				<button style='width: 50px; height: 50px;' onclick="SetDrawingMode('Line')">Line</button>
-                <button style='width: 50px; height: 50px;' onclick="SetDrawingMode('Eraser')">Eraser</button
+                <button style='width: 50px; height: 50px;' onclick="SetDrawingMode('Eraser')">Eraser</button>
+				<button style='width: 50px; height: 50px;' onclick="Undo();">Undo</button>
+				<button style='width: 50px; height: 50px;' onclick="Redo();">Redo</button>
+			
 			</div>
 		</div>
 		
@@ -63,19 +66,18 @@
        
 		
 		function ClickOnCanvas(){
-			for(var i = 0; i < ClicksX.length; i++){
-                if(MouseX <= (ClicksX[i]+BrushSize) && MouseX >= (ClicksX[i]-BrushSize) && MouseY <= (ClicksY[i]+BrushSize) && MouseY >= (ClicksY[i]-BrushSize)){
+			for(var i = 0; i <= ClicksX.length; i++){
+                if(((MouseX+(BrushSize/2) <= (ClicksX[i]+BrushSize/2) || MouseX-(BrushSize/2) <= (ClicksX[i]+BrushSize/2)) && (MouseX-(BrushSize/2) >= (ClicksX[i]-BrushSize/2) || MouseX+(BrushSize/2) >= (ClicksX[i]-BrushSize/2))) && ((MouseY+(BrushSize/2) <= (ClicksY[i]+BrushSize/2) || MouseY-(BrushSize/2) <= (ClicksY[i]+BrushSize/2)) && (MouseY-(BrushSize/2) >= (ClicksY[i]-BrushSize/2) || MouseY+(BrushSize/2) >= (ClicksY[i]-BrushSize/2)))){
                     ClicksX.push(ClicksX[i]);
                     ClicksY.push(ClicksY[i]);
-                    //break;
+                    break;
                 }
-                else{
+                else if(i >= (ClicksX.length)){
                     ClicksX.push(MouseX);
                     ClicksY.push(MouseY);
-                    //break;
+                    break;
                 }
             }
-    
 		}
 
 
@@ -167,11 +169,13 @@
         }
         
         function MovingMouse(){
-            //if(MouseButton==1 & DrawMode == 'Eraser'){
-//                //LineColor = 'White';
-//                DrawLine(OldMouseX, OldMouseY, MouseX, MouseY);
-//            }
         }
+		
+		function Undo(){
+			ClicksX.pop();
+			ClicksY.pop();
+			GetMousePos(Event);
+		}
 		
 		
 	</script>
