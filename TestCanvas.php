@@ -35,23 +35,18 @@
 			<input type="color" id='LineColor' onChange="ChangeColor();">
 			
 			<div style='display: flex; flex-flow: row;'>
-				<button style='width: 25px; height: 25px;' onclick="SetDrawingMode('Brush')">Brush</button>
-				<button style='width: 25px; height: 25px;' onclick="SetDrawingMode('Line')">Line</button>
-				
-				
+				<button style='width: 50px; height: 50px;' onclick="SetDrawingMode('Line')">Line</button>
+                <button style='width: 50px; height: 50px;' onclick="SetDrawingMode('Eraser')">Eraser</button
 			</div>
 		</div>
 		
-		<canvas id='PlannerCanvas' width="500" height="500" style='border: 1px solid black; background-color: white;' onClick='ClickOnCanvas();' onMouseMove="HoverOverCanvas();" onMouseDown="CurrentMouseButtonPress(event);" onMouseUp="MouseUp();"></canvas>
+		<canvas id='PlannerCanvas' width="500" height="500" style='border: 1px solid black; background-color: white;' onClick='ClickOnCanvas();' onMouseMove="MovingMouse();" onMouseDown="var MouseClick=1;" onMouseUp="MouseClick=0;"></canvas>
 		<button onClick="ClearCanvas();">Clear Canvas</button>
 	</div>
 	
 </body>
 	
 	<script>
-		
-		//var click1Pos = [];
-		//var click2Pos = [];
         var ClicksX = [];
         var ClicksY = [];
 		var canvas = document.getElementById('PlannerCanvas');
@@ -59,7 +54,7 @@
 		var w = canvas.width;
 		var h = canvas.height;
 		var BrushSize;
-		var DrawMode = 'Brush';
+		var DrawMode = 'Line';
 		var MouseButton = null;
         var MouseX;
         var MouseY;
@@ -73,23 +68,9 @@
 			
             ClicksX.push(MouseX);
             ClicksY.push(MouseY);
-            
 		}
-		
-		function CurrentMouseButtonPress(event){
-			MouseButton = event.button;
-		}
-        
-        function MouseUp(){
-            MouseButton = null;
-        }
-		
-		function HoverOverCanvas(){
-			if(DrawMode == 'Brush' && MouseButton == 0){
-				DrawLine(OldMouseX, OldMouseY, MouseX, MouseY);
-			}
-		}
-		
+
+
 		function GetMousePos(e){
 			    
 			var rect = canvas.getBoundingClientRect();
@@ -100,15 +81,16 @@
 			MouseY = e.clientY - rect.top;
             
             //Clears old line and draws new one
-            if(DrawMode == 'Line' && ClicksX[ClicksX.length-1] != MouseX){
+            if(DrawMode == 'Line' && (ClicksX.length-1) % 2 == 0){
                 ctx.beginPath();
                 ctx.moveTo(ClicksX[ClicksX.length-1], ClicksY[ClicksY.length-1]);
                 ctx.lineTo(OldMouseX, OldMouseY);
-                ctx.lineWidth =  parseInt(BrushSize) + 2; 
+                ctx.clearRect(0,0,w,h); 
                 ctx.strokeStyle = 'White';//body or canvases color
                 ctx.stroke();
                 DrawOldLines();
                 DrawLine(ClicksX[ClicksX.length-1], ClicksY[ClicksY.length-1], MouseX, MouseY);
+                ctx.closePath();
             }
     
 			document.getElementById('TestCoords').innerHTML = MouseX + ', ' + MouseY; 
@@ -119,11 +101,11 @@
             ctx.lineJoin = "round";
             ctx.lineCap = "round";
             ctx.strokeStyle = LineColor;
-            ctx.lineWidth = BrushSize;
+            //ctx.lineWidth = BrushSize;
             ctx.moveTo(Pos1X, Pos1Y);
             ctx.lineTo(Pos2X, Pos2Y);
             ctx.stroke();
-			//ctx.closePath();
+			ctx.closePath();
         }
         
 		function ClearCanvas(){
@@ -156,9 +138,15 @@
 		}
         
         function DrawOldLines(){
-            for(var i = 0; i < ClicksX.length; i++){
+            for(var i = 0; i < ClicksX.length; i+=2){
                 DrawLine(ClicksX[i], ClicksY[i], ClicksX[i+1], ClicksY[i+1]);
-				
+            }
+        }
+        
+        function MovingMouse(){
+            if(MouseButton==1 & DrawMode == 'Eraser'){
+                //LineColor = 'White';
+                DrawLine(OldMouseX, OldMouseY, MouseX, MouseY);
             }
         }
 		
