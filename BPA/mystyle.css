@@ -39,3 +39,12 @@ display: none;
 .searchbutton:hover{
 background-color: #111;
 }
+.header h1{
+	text-align: center;
+	padding-left: 100px;
+	margin: 0;
+}
+
+.row1{
+	
+}

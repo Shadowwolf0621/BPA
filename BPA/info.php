@@ -47,7 +47,7 @@
 		</p>
 	</div>
 	
-	<div style="display: flex; flex-direction: row;">
+	<div style="row1">
 		<div class="MissionStatement">
 			<a href="#">
 				<img src="grayBox.png" alt="green home" width="250" height="250">
